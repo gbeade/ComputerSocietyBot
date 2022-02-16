@@ -18,5 +18,6 @@ All commands are prefixed by an $ symbol.
 ### CSXP 
 CSXP refers to Computer Society's Experience Points. CSXP can be tracked by, awarded to or removed from any user in the server where the bot has been set up. 
 - $csxp: replies with the sender's current CSXP. 
+- $csxp leaderboard: replies with the server's members' CSXP.
 
 
