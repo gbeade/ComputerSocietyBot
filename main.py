@@ -1,44 +1,34 @@
+# Mirar el video para ver que esta pasando:
+# https://www.youtube.com/watch?v=SPTfmiYiuok
+
 import os
 import discord
 import requests
 import json
 import random
 from replit import db
+import csxp
 # from keep_alive import keep_alive
+# TODO: implement keep_alive 
 
-client = discord.Client()
+intents = discord.Intents().all()
+client = discord.Client(prefix = '', intents=intents)
 
-sad_words = ["sad", "depressed", "unhappy", "angry", "miserable", "depressing"]
+def fetch_csxp(username): 
+  if "csxp" not in db.keys():
+    db["csxp"] = {}
 
-starter_encouragements = [
-  "Cheer up!",
-  "Hang in there.",
-  "You are a great person / bot!"
-]
-
-if "responding" not in db.keys():
-  db["responding"] = True
+  if username not in db["csxp"].keys(): 
+    db["csxp"][username] = 0
+    
+  return db["csxp"][username]
 
 def get_quote():
   response = requests.get("https://zenquotes.io/api/random")
   json_data = json.loads(response.text)
   quote = json_data[0]['q'] + " -" + json_data[0]['a']
   return(quote)
-
-def update_encouragements(encouraging_message):
-  if "encouragements" in db.keys():
-    encouragements = db["encouragements"]
-    encouragements.append(encouraging_message)
-    db["encouragements"] = encouragements
-  else:
-    db["encouragements"] = [encouraging_message]
-
-def delete_encouragment(index):
-  encouragements = db["encouragements"]
-  if len(encouragements) > index:
-    del encouragements[index]
-    db["encouragements"] = encouragements
-
+ 
 @client.event
 async def on_ready():
   print('We have logged in as {0.user}'.format(client))
@@ -47,52 +37,31 @@ async def on_ready():
 async def on_message(message):
   if message.author == client.user:
     return
+  
+  msg_ary = message.content.split() 
+  cmd = msg_ary[0]
 
-  msg = message.content
+  if cmd == '$hello':
+    await message.channel.send("Hello "+message.author.name+"!")
 
-  if msg.startswith('$hello'):
-    await message.channel.send("Hola "+message.author.name)
-
-  if msg.startswith('$inspire'):
+  if cmd == '$inspire':
     quote = get_quote()
     await message.channel.send(quote)
 
-  if db["responding"]:
-    options = starter_encouragements
-    if "encouragements" in db.keys():
-      options = options + db["encouragements"]
-
-    if any(word in msg for word in sad_words):
-      await message.channel.send(random.choice(options))
-
-  if msg.startswith("$new"):
-    encouraging_message = msg.split("$new ",1)[1]
-    update_encouragements(encouraging_message)
-    await message.channel.send("New encouraging message added.")
-
-  if msg.startswith("$del"):
-    encouragements = []
-    if "encouragements" in db.keys():
-      index = int(msg.split("$del",1)[1])
-      delete_encouragment(index)
-      encouragements = db["encouragements"]
-    await message.channel.send(encouragements)
-
-  if msg.startswith("$list"):
-    encouragements = []
-    if "encouragements" in db.keys():
-      encouragements = db["encouragements"]
-    await message.channel.send(encouragements)
-
-  if msg.startswith("$responding"):
-    value = msg.split("$responding ",1)[1]
-
-    if value.lower() == "true":
-      db["responding"] = True
-      await message.channel.send("Responding is on.")
-    else:
-      db["responding"] = False
-      await message.channel.send("Responding is off.")
-
+  if cmd == "$csxp":
+    if (len(msg_ary)) == 1:
+      await message.channel.send(
+        "[@{0}]: {1} CSXP".format(message.author.name, 
+        fetch_csxp(message.author.name) )
+      )
+    elif msg_ary[1] == "leaderboard": 
+      str = "🏆 CSXP Leaderboard 🏆\n"
+      str += "------------------------\n"
+      for x in message.guild.members: 
+        str += "[@{0}]: {1} CSXP\n".format(x.name,fetch_csxp(x.name))
+      await message.channel.send(str)
+      
 # keep_alive()
 client.run(os.environ['TOKEN'])
+
+
