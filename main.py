@@ -7,7 +7,6 @@ import requests
 import json
 import random
 from replit import db
-import csxp
 # from keep_alive import keep_alive
 # TODO: implement keep_alive 
 
@@ -22,6 +21,29 @@ def fetch_csxp(username):
     db["csxp"][username] = 0
     
   return db["csxp"][username]
+
+def inc_csxp(username, csxp): 
+  if "csxp" not in db.keys():
+    db["csxp"] = {}
+
+  if username not in db["csxp"].keys(): 
+    db["csxp"][username] = 0
+
+  db["csxp"][username] += csxp
+  return db["csxp"][username]
+
+def dec_csxp(username, csxp): 
+  if "csxp" not in db.keys():
+    db["csxp"] = {}
+
+  if username not in db["csxp"].keys() or db["csxp"][username] == 0 : 
+    db["csxp"][username] = 0
+    return 
+
+  db["csxp"][username] -= csxp
+  return db["csxp"][username]
+
+
 
 def get_quote():
   response = requests.get("https://zenquotes.io/api/random")
@@ -48,6 +70,7 @@ async def on_message(message):
     quote = get_quote()
     await message.channel.send(quote)
 
+  ## El formato es horrible despues lo corrijo 
   if cmd == "$csxp":
     if (len(msg_ary)) == 1:
       await message.channel.send(
@@ -55,11 +78,15 @@ async def on_message(message):
         fetch_csxp(message.author.name) )
       )
     elif msg_ary[1] == "leaderboard": 
-      str = "🏆 CSXP Leaderboard 🏆\n"
-      str += "------------------------\n"
+      strn = "🏆 CSXP Leaderboard 🏆\n"
+      strn += "------------------------\n"
       for x in message.guild.members: 
-        str += "[@{0}]: {1} CSXP\n".format(x.name,fetch_csxp(x.name))
-      await message.channel.send(str)
+        strn += "[@{0}]: {1} CSXP\n".format(x.name,fetch_csxp(x.name))
+      await message.channel.send(strn)
+    elif len(msg_ary) == 4 and msg_ary[1] == "add": 
+      strn = (msg_ary[2]+" now has "+str(inc_csxp(msg_ary[2], int(msg_ary[3])))+" CSXP!") 
+      await message.channel.send(strn)
+
       
 # keep_alive()
 client.run(os.environ['TOKEN'])
