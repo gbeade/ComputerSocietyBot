@@ -1,32 +1,25 @@
 from replit import db
 
-def fetch_csxp(username): 
+
+def _val_db(member): 
   if "csxp" not in db.keys():
     db["csxp"] = {}
+  if member not in db["csxp"].keys(): 
+    db["csxp"][member] = 0
+  
+def fetch_csxp(member): 
+  _val_db(member)  
+  return db["csxp"][member]
 
-  if username not in db["csxp"].keys(): 
-    db["csxp"][username] = 0
-    
-  return db["csxp"][username]
+def inc_csxp(member, csxp): 
+  _val_db(member)
+  db["csxp"][member] += csxp
+  return db["csxp"][member]
 
-def inc_csxp(username, csxp): 
-  if "csxp" not in db.keys():
-    db["csxp"] = {}
-
-  if username not in db["csxp"].keys(): 
-    db["csxp"][username] = 0
-
-  db["csxp"][username] += csxp
-  return db["csxp"][username]
-
-def dec_csxp(username, csxp): 
-  if "csxp" not in db.keys():
-    db["csxp"] = {}
-
-  if username not in db["csxp"].keys() or db["csxp"][username] == 0 : 
-    db["csxp"][username] = 0
-    return 
-
-  db["csxp"][username] -= csxp
-  return db["csxp"][username]
+def dec_csxp(member, csxp): 
+  _val_db(member)
+  r = db["csxp"][member] - csxp
+  if r >= 0: 
+    db["csxp"][member] -= csxp
+  return db["csxp"][member]
 

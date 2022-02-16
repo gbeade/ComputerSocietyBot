@@ -36,6 +36,8 @@ class Csxp(commands.Cog):
         await ctx.send("You can't bet more CSXP than what you have!")
       elif p == 0: 
         await ctx.send("You can't bet if you don't have CSXP!")
+      elif q > 10: 
+        await ctx.send("You can't bet more than 10 CSXP.")
       else:
         coin = random.randint(0, 1)
         if coin == 1: 
@@ -57,10 +59,10 @@ class Csxp(commands.Cog):
             " CSXP"
           )
 
-        
-            
-        
-
+    @csxp.command(name="faucet")
+    async def faucet(self, ctx: commands.Context): 
+      t = inc_csxp(ctx.author.name, 1) 
+      await ctx.send("Here's 1 CSXP! Your current balance is now: "+ str(t))
 
       
 
