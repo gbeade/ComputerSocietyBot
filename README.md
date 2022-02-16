@@ -8,7 +8,7 @@ Authorize the bot at https://discord.com/oauth2/authorize?client_id=943286355281
 Pull and and run main.py in https://replit.com/join/kbtdgynilq-gonzalomanuelma. A future version will allow the bot to run forever, but for now the bot must be manually booted after one hour of inactivity. The replit acts as a server so that it depends on no computer and can be turned on/off from anywhere. 
 
 ## Using the bot 
-All commands are prefixed by an $ symbol. 
+All commands are prefixed by a '$' symbol. 
 
 ### Debugging
 - $hello: greets the user 
