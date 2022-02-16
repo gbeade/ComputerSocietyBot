@@ -11,13 +11,15 @@ Pull and and run main.py in https://replit.com/join/kbtdgynilq-gonzalomanuelma. 
 All commands are prefixed by a '$' symbol. 
 
 ### Debugging
-- $hello: greets the user 
 - $inspire: replies with a motivational phrase 
-- $csxp add [username] [int]: adds CSXP to a given user, even if it doesn't exist 
 
 ### CSXP 
 CSXP refers to Computer Society's Experience Points. CSXP can be tracked by, awarded to or removed from any user in the server where the bot has been set up. 
 - $csxp: replies with the sender's current CSXP. 
 - $csxp leaderboard: replies with the server's members' CSXP.
+- $csxp faucet: gives the user 1 CSXP
+- $csxp gamble <q>: bets q units of CSXP with a 0.5 chance of doubling and a .5 chance of losing. 
+
+
 
 
