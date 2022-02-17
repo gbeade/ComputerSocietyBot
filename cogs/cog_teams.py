@@ -29,11 +29,9 @@ class Csxp(commands.Cog):
 
     @teams.command(name="quit")  # subcommand
     async def quit(self, ctx: commands.Context):
-      await ctx.send("<@{0}> quit [{1}]".format(
-        ctx.author.id, 
-        data.fetch_team_from_member(ctx.author.id)
-      ))
-      data.quit(ctx.author.id)
+      t = data.fetch_team_from_member(ctx.author.id)
+      t = "<@{0}> quit [{1}]".format(ctx.author.id, t) if t else "No team to quit!"   
+      await ctx.send(t)
 
 
     @teams.command(name="mine")  # subcommand
