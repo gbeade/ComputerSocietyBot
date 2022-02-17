@@ -11,14 +11,27 @@ Pull and and run main.py in https://replit.com/join/kbtdgynilq-gonzalomanuelma. 
 All commands are prefixed by a '$' symbol. 
 
 ### Debugging
-- $inspire: replies with a motivational phrase 
+- ``$inspire``: replies with a motivational phrase 
 
 ### CSXP 
 CSXP refers to Computer Society's Experience Points. CSXP can be tracked by, awarded to or removed from any user in the server where the bot has been set up. 
-- $csxp: replies with the sender's current CSXP. 
-- $csxp leaderboard: replies with the server's members' CSXP.
-- $csxp faucet: gives the user 1 CSXP
-- $csxp gamble <q>: bets q units of CSXP with a 0.5 chance of doubling and a .5 chance of losing. 
+- ``$csxp``: replies with the sender's current CSXP. 
+- ``$csxp leaderboard``: replies with the server's members' CSXP.
+- ``$csxp faucet``: gives the user 1 CSXP
+- ``$csxp gamble <q>``: bets q units of CSXP with a .5 chance of doubling and a .5 chance of losing. 
+  
+### Teams 
+Teams are member subgroups inside the Bot's scope in a server. A member can only belong to one team. 
+ 
+- ``$teams``: replies with all teams and their members, if any. 
+- ``$teams signup <team>``: signs a user to a team. If the team does not exist, the team may be created at runtime if it does not exist (if the supervisor allowed it)
+- ``$teams quit``: removes the user from its current team, if any. 
+- ``$teams mine``: replies with the user's current team, if any. 
+  
+  ####TODO: 
+- ``$teams creat_runtime <boolean>`` (priviliged): determines whether a team can be created at runtime by an ordinary member 
+- ``$teams create <team>`` (priviliged): creates a new empty team
+
 
 
 
