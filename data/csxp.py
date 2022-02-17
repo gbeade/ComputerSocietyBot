@@ -1,6 +1,5 @@
 from replit import db
 
-
 def _val_db(member): 
   if "csxp" not in db.keys():
     db["csxp"] = {}
