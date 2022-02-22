@@ -29,8 +29,24 @@ Teams are member subgroups inside the Bot's scope in a server. A member can only
 - ``$teams mine``: replies with the user's current team, if any. 
   
   ####TODO: 
-- ``$teams creat_runtime <boolean>`` (priviliged): determines whether a team can be created at runtime by an ordinary member 
-- ``$teams create <team>`` (priviliged): creates a new empty team
+- ``$teams creat_runtime <boolean>`` (privileged): determines whether a team can be created at runtime by an ordinary member 
+- ``$teams create <team>`` (privileged): creates a new empty team
+
+### Trivia
+Members can play a sequential trivia of increasing difficulty. The more questions correctly answered, the more difficult the next questions are. Tougher questions give out more CSXP. Trivia must be turned on and filled with questions by priviledged users. 
+
+  ####TODO
+- ``$trivia push <question> <answer> <difficulty>`` (privileged): pushes a question with a certain difficulty (1-10, where 1 is the easiest) and its answer to the database.
+- ``$trivia``: replies with the next question in the queue. 
+- ``$trivia <answer>``: submits and answer to the current active question. It is rejected if incorrect; CSXP is gained and next question is dequeued if correct. 
+
+### Capture The Flag
+Members are shown several challenges that are to be solved. Each challenge has a code and a flag that is to be found. The more difficult a challenge is, the more CSXO it returns. 
+
+  ####TODO
+- ``$ctf push <category> <challenge> <flag> <difficulty>`` (privileged): pushes a challenge with a certain difficulty (1-10, where 1 is the easiest) and its flag to the database.
+- ``$ctf``: replies with all challenges and their codes. 
+- ``$ctf <code> <flag>``: submits the flag to a challenge. It is rejected if incorrect; CSXP is gained if correct. 
 
 
 
