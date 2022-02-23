@@ -7,23 +7,28 @@ class Csxp(commands.Cog):
     def __init__(self, bot: commands.Bot):
       self.bot = bot
 
+    def getScore(self,member):
+      return data.fetch_csxp(member.name)
+              
     @commands.group(name="csxp", invoke_without_command=True) 
     async def csxp(self, ctx: commands.Context, msg = ""): 
       await ctx.send(
         "<@{0}> You have {1} CSXP.".format(
           ctx.author.id, 
-          data.fetch_csxp(ctx.author.name)
+          self.getScore(ctx.author)
         ))
  
     @csxp.command(name="leaderboard")  # subcommand
     async def leaderboard(self, ctx: commands.Context):
       strn = "🏆 CSXP Leaderboard 🏆\n"
       strn += "---------------------------------\n"
-      # TODO: ordenar por cantidad de puntos y poner emojis del podio 
-      for x in ctx.guild.members: 
-        strn += "[<@{0}>]: {1} CSXP\n".format(
-          x.id, 
-          data.fetch_csxp(x.name)
+      medals = ["🥇","🥈","🥉"]
+      idAndScore = list(map(lambda x: [x.id,self.getScore(x)],ctx.guild.members))
+      for idx,[id,score] in enumerate(sorted(idAndScore,key=lambda x: x[1], reverse=True)): 
+        strn += "[<@{0}>]: {1} CSXP {2}\n".format(
+          id, 
+          score,
+          medals[idx] if idx <= 2 else ""
         )
       await ctx.send(strn)
 
