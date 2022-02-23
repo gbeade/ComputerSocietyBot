@@ -13,7 +13,7 @@ def main():
   bot.load_extension("cogs.cog_greetings")
   bot.load_extension("cogs.cog_csxp") 
   bot.load_extension("cogs.cog_teams") 
-  
+  bot.load_extension("cogs.cog_general") 
   bot.run(os.environ['TOKEN'])
 
 if __name__ == '__main__':
