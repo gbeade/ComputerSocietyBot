@@ -44,7 +44,7 @@ Members can play a sequential trivia of increasing difficulty. The more question
 Members are shown several challenges that are to be solved. Each challenge has a code and a flag that is to be found. The more difficult a challenge is, the more CSXO it returns. 
 
   ####TODO
-- ``$ctf push <category> <challenge> <flag> <difficulty>`` (privileged): pushes a challenge with a certain difficulty (1-10, where 1 is the easiest) and its flag to the database.
+- ``$ctf push <category_code> <name> <description> <flag> <difficulty>`` (privileged): pushes a challenge with a certain difficulty (1-10, where 1 is the easiest) and its flag to the database.
 - ``$ctf``: replies with all challenges and their codes. 
 - ``$ctf <code> <flag>``: submits the flag to a challenge. It is rejected if incorrect; CSXP is gained if correct. 
 
