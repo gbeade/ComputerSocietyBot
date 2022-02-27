@@ -9,22 +9,43 @@ class Ctf(commands.Cog):
     
   @commands.group(name="ctf", invoke_without_command=True)
   async def ctf(self, ctx: commands.Context):
-    res = ""
-    for x in data.get_categories():
-      res += "Category: "+x+" ["+x[:5].upper()+"]\n"
-      res += str(data.get_challenges_by_cat(x))+"\n"
+    res = "Categories\n"
+    for prefix, category in data.get_categories().items():
+      res += "\t{0} [{1}]\n".format(
+        category, prefix
+      )
     await ctx.send(res)
 
+  @ctf.command(name="newcat")
+  async def newcat(self, ctx: commands.Context, category: str, prefix:str):
+    data.add_category(category, prefix)
+
   @ctf.command(name="push")
-  async def push(self, ctx: commands.Context, cat: str, chllg: str, dsc:str, flag:str, diff:str):
-    data.push_challenge(cat, chllg, dsc, flag, diff)
-    await ctx.send("Challenge ["+chllg+"] created!\n")
+  async def push(
+    self, ctx: commands.Context, 
+    cat_code: str, 
+    name: str, 
+    desc: str, 
+    flag: str, 
+    diff: int
+  ):
+    m = data.push_challenge(
+      cat_code=cat_code, 
+      name=name, 
+      desc=desc, 
+      flag=flag, 
+      diff=diff
+    )
+
+    if m is not None: 
+      await ctx.send("Challenge [{0}] pushed".format(m))
+    else: 
+      await ctx.send("There was an error pushing the challenge")
 
 
-  @ctf.command(name="rmv")
-  async def rmv(self, ctx: commands.Context, cat: str, chllg: str, diff:str):
-    data.del_challenge(cat, diff, chllg)
-    await ctx.send("Challenge ["+chllg+"] removed!\n")
+    
+      
+
 
 
 def setup(bot: commands.Bot):
